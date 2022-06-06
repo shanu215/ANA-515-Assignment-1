@@ -1,13 +1,11 @@
 ---
-title: "ANA 515 Assignment 1"
+title: "ANA 515 Assignment"
 author: "Shahnawaz Shaik"
-date: "6/5/2022"
-output:
-  html_document:
-       toc: true
-        toc_float: true
-        theme: solar
+date: '2022-06-05'
+output: html_document
+
 ---
+
 
 ```{r setup, include = FALSE}
 #Installing these packages first to be able to use the functions within them. install.packages("package_name")
@@ -22,9 +20,12 @@ install.packages("bslib", dependencies = TRUE)
 
 ```{r get-data, include = FALSE}
 #code chunk to get the dataset from GitHub/fivethirtyeight 
-data_url <- "https://raw.githubusercontent.com/fivethirtyeight/guns-data/master/full_data.csv"
+url <- "https://raw.githubusercontent.com/fivethirtyeight/guns-data/master/full_data.csv"
 #Using the read_csv from the tidyverse as it is faster than the conventional read.csv command
-my_data <- read_csv(data_url)
+install.packages("readr", dependencies = TRUE)
+library(readr)
+library(tidyverse)
+my_data <- read_csv(url)
 glimpse(my_data)
 ```
 
