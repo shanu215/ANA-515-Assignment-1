@@ -1,0 +1,57 @@
+---
+title: "ANA 515 Assignment 1"
+author: "Shahnawaz Shaik"
+date: "6/5/2022"
+output:
+  html_document:
+       toc: true
+        toc_float: true
+        theme: solar
+---
+
+```{r setup, include = FALSE}
+#Installing these packages first to be able to use the functions within them. install.packages("package_name")
+#loading the installed package for tidyverse, knitr and bslib
+install.packages("tidyverse", dependencies = TRUE)
+install.packages("knitr", dependencies = TRUE)
+install.packages("bslib", dependencies = TRUE)
+```
+
+
+
+
+```{r get-data, include = FALSE}
+#code chunk to get the dataset from GitHub/fivethirtyeight 
+data_url <- "https://raw.githubusercontent.com/fivethirtyeight/guns-data/master/full_data.csv"
+#Using the read_csv from the tidyverse as it is faster than the conventional read.csv command
+my_data <- read_csv(data_url)
+glimpse(my_data)
+```
+
+```{r data-manipulation, include = FALSE}
+#this next line is creating a subset called 'youth' of the gun_data dataset where the age is equal or greater to 65
+youth <- my_data %>% 
+  filter(age <= 65)
+summary(youth)
+```
+
+```{r inline-text, echo = FALSE}
+#This next chunk is inline code. Inline code puts the text with the output of the function in the document.
+```
+We have data about `r nrow(my_data)` individuals killed by guns. Only `r nrow(my_data) - nrow(youth)`  are older than 65. The distribution of the remainder is shown below: 
+
+# Gun deaths by age 
+```{r youth-dist, echo = FALSE} 
+library(ggplot2)
+youth %>% 
+ggplot(aes(age)) + 
+geom_freqpoly(binwidth = 1)
+```
+
+# Gun deaths by race 
+```{r race-dist, echo = FALSE} 
+youth %>% 
+ggplot(aes(fct_infreq(race)%>%fct_rev())) + 
+geom_bar() + coord_flip() + 
+labs(x = "Victim race") 
+```
